@@ -24,10 +24,10 @@ class Stock(Account):
         if self.instrument_type == 'stock':
             return investpy.get_stock_recent_data(stock=self.ticker, country=self.country).tail(1).iloc[0]['Close']
 
-    def get_current_value(self):
-        return self.get_current_close() * self.balance
+    def get_current_value(self, currency):
+        value_in_usd = self.get_current_close() * self.balance
+        cross = investpy.get_currency_cross_recent_data(f'USD/{currency}').tail(1).iloc[0]['Close']
+        return value_in_usd * cross
 
-    def print_account(self):
-        print(f'{self.ticker}: {self.balance} ({self.get_current_value()})')
-
-
+    def print_account(self, currency):
+        print(f'{self.ticker}: {self.balance} ({self.get_current_value(currency)} {currency})')

@@ -5,8 +5,8 @@ class Portfolio:
     def __init__(self, data):
         self.transactions = data
 
-    def print(self):
-        [stock.print_account() for stock in self.get_stocks()]
+    def print(self, currency):
+        [stock.print_account(currency) for stock in self.get_stocks()]
 
     def get_stocks(self):
         stocks = []
